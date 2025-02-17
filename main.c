@@ -11,7 +11,7 @@
 // Requires: lower < upper
 int randint(int lower, int upper) {
     assert(lower < upper);
-    int range = upper - lower;
+    int range = upper - lower + 1; // To include both endpoints. 
     return lower + (rand() % range);
 }
 
@@ -66,11 +66,12 @@ int main() {
     fprintf(stderr, "Enter upper range of numbers: ");
     int high = 0;
     retval = scanf("%d", &high);
-    if (retval != 1) {
+    if (retval != 1 || high < low) {
         fprintf(stderr, "Incorrect input, exiting...");
         return 1;
     }
-    
+    fprintf(stderr, "\n");
+
     int  a[nqs]; // To store first param of arith question
     char ops[nqs]; // to store operator
     int  b[nqs]; // to store second param
@@ -80,7 +81,7 @@ int main() {
         ops[i] = pickop();
         b[i] = randint(low, high);
         
-        printf("%d\t%c %d\t=\n", a[i], ops[i], b[i]); 
+        printf("%d\t%c  %d\t=\n", a[i], ops[i], b[i]); 
         
     }
 
@@ -89,7 +90,7 @@ int main() {
 
 
     for (int i = 0; i < nqs; i++) {
-        printf("%d\t%c %d\t= %d\n", a[i], ops[i], b[i], get_answer(a[i], ops[i], b[i]));
+        printf("%d\t%c  %d\t= %d\n", a[i], ops[i], b[i], get_answer(a[i], ops[i], b[i]));
         
     }
 }
